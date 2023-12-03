@@ -8,5 +8,5 @@ As of now there is still a lot of work required, but a portion of a singleplayer
 * [BepInEx UnityMono x64 6.x](https://github.com/BepInEx/BepInEx/releases/) and HarmonyX (bundled with the release)
 
 # Installation
-* Download [Sui's Hack](https://SuiMachine/DwarfHeim---Project-Rebellion/releases).
+* Download [Sui's Hack](https://github.com/SuiMachine/DwarfHeim---Project-Rebellion/releases).
 * Extract the zip archive and move it to the game's directory.
