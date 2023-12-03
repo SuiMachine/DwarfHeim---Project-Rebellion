@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
@@ -18,6 +18,10 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>H:\Steam\steamapps\common\DwarfHeim\Client\BepInEx\plugins\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>E:\Projekty\DwarfHeim---Probject-Rebellion\Release\BepInEx\plugins\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

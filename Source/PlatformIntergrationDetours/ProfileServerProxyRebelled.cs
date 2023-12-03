@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Ucg.Matchmaking;
@@ -152,22 +153,47 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 	public class ProfileServerProxyRebelled : ProfileServerProxy
 	{
-		public static new event EventHandler<UserAuthorizationResponse> AuthResponse;
+		public class ReflectionCache
+		{
+			//This is because of one of stupid edge cases, where you can't left assign in if a field is delcared as event, unless it belongs to declaring class
+			public FieldInfo AuthResponse;
+			public FieldInfo GetPlayerDataResponse;
+			public FieldInfo GetFriendsDataResponse;
+			public FieldInfo GetUserMatchesResponse;
+			public FieldInfo GetLeaderboardResponse;
+			public FieldInfo GetExperienceLevelTableResponse;
+			public FieldInfo GetCosmeticsByUnlockTypeResponse;
+			public FieldInfo GetGlobalChatResponse;
+			public FieldInfo SendGlobalChatMessageResponse;
+			public FieldInfo SendBugReportResponse;
+			public FieldInfo PlayerUpdateResponse;
+			public FieldInfo GetPlayerCosmeticsResponse;
+			public FieldInfo GetPlayerSteamResponse;
 
-		public static new event EventHandler<UserValidatePlayerNameResponse> CheckUsernameValidityResponse;
+			public ReflectionCache()
+			{
+				var reflectionSelf = typeof(ReflectionCache).GetFields(BindingFlags.Instance | BindingFlags.Public);
+
+				foreach(var field in reflectionSelf)
+				{
+					var name = field.Name;
+					var fieldToFind = typeof(ProfileServerProxy).GetField(name, BindingFlags.Static | BindingFlags.NonPublic); //C# is lying - these are private!
+					if(fieldToFind == null)
+					{
+						Plugin.LogError($"Failed to get an event reflection {name} - not good!");
+						continue;
+					}
+
+					field.SetValue(this, fieldToFind);
+				}
+				Plugin.Debug_LogMessage("Finished seting up reflections for events");
+
+			}
+		}
+		
+		public static ReflectionCache ReflectionCacheInstance = new ReflectionCache();
+
 		public static new event Action<string> RegisterPlayerResponse;
-		public static new event EventHandler<ProfileData> GetPlayerDataResponse;
-		public static new event EventHandler<List<GetFriendsRequestData>> GetFriendsDataResponse;
-		public static new event EventHandler<List<MatchProfile>> GetUserMatchesResponse;
-		public static new event EventHandler<ProfileProperty<int>[][]> GetLeaderboardResponse;
-		public static new event EventHandler<ExperienceLevelTable> GetExperienceLevelTableResponse;
-		public static new event EventHandler<Cosmetic[]> GetCosmeticsByUnlockTypeResponse;
-		public static new event EventHandler<ChatResponse> GetGlobalChatResponse;
-		public static new event EventHandler<string> SendGlobalChatMessageResponse;
-		public static new event EventHandler<bool> SendBugReportResponse;
-		public static new event EventHandler<bool> PlayerUpdateResponse;
-		public static new event EventHandler<PlayerCosmeticsResponse> GetPlayerCosmeticsResponse;
-		public static new event EventHandler<ProfileData[]> GetPlayerSteamResponse;
 		public static new event Action<MetaInfo, bool> ErrorResponse;
 		public static ProfileServerProxyRebelled OtherInstance;
 
@@ -371,7 +397,12 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void GetPlayerDataRequest(string id)
 		{
-			Plugin.Debug_LogMessage("Yo player data request");
+			OnGetPlayerDataResponse(new ProfileData()
+			{
+				
+			});
+
+/*			Plugin.Debug_LogMessage("Yo player data request");
 			HttpHeaders httpHeaders = new HttpHeaders
 			{
 				Authorization = PlayerProfile.AuthenticationService.AuthToken
@@ -387,7 +418,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				BaseMessage = "[GetPlayerDataRequest] ",
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
 			};
-			StartCoroutine(HTTPController.GET<ProfileResponseObject<ProfileData>>(httpRequest, new Action<ProfileResponseObject<ProfileData>>(this.OnGetPlayerDataResponse), httpErrorHandler, null));
+			StartCoroutine(HTTPController.GET<ProfileResponseObject<ProfileData>>(httpRequest, new Action<ProfileResponseObject<ProfileData>>(this.OnGetPlayerDataResponse), httpErrorHandler, null));*/
 		}
 
 		private System.Collections.IEnumerator GetPlayerDataRequestOLD()
@@ -482,7 +513,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					list.Add(getFriendsRequestData);
 				}
 
-				EventHandler<List<GetFriendsRequestData>> getFriendsDataResponse = ProfileServerProxyRebelled.GetFriendsDataResponse;
+				EventHandler<List<GetFriendsRequestData>> getFriendsDataResponse = (EventHandler<List<GetFriendsRequestData>>)ReflectionCacheInstance.GetFriendsDataResponse.GetValue(this);
 				if (getFriendsDataResponse == null)
 				{
 					return;
@@ -497,7 +528,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					this.OnErrorResponse(response.Meta, false);
 					return;
 				}
-				EventHandler<List<GetFriendsRequestData>> getFriendsDataResponse2 = ProfileServerProxyRebelled.GetFriendsDataResponse;
+				EventHandler<List<GetFriendsRequestData>> getFriendsDataResponse2 = (EventHandler<List<GetFriendsRequestData>>)ReflectionCacheInstance.GetFriendsDataResponse.GetValue(this);
 				if (getFriendsDataResponse2 == null)
 				{
 					return;
@@ -823,7 +854,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				return;
 			}
 			LogHandler.PrintDebug("OnCosmeticByUnlockType: Result success! response=" + response.ToJson<ProfileResponseObject<Cosmetic[]>>(), DebugCategory.ProfileServer, null);
-			EventHandler<Cosmetic[]> getCosmeticsByUnlockTypeResponse = ProfileServerProxyRebelled.GetCosmeticsByUnlockTypeResponse;
+			EventHandler<Cosmetic[]> getCosmeticsByUnlockTypeResponse = (EventHandler<Cosmetic[]>)ReflectionCacheInstance.GetCosmeticsByUnlockTypeResponse.GetValue(this);
 			if (getCosmeticsByUnlockTypeResponse == null)
 			{
 				return;
@@ -842,7 +873,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				return;
 			}
 			LogHandler.PrintDebug("OnGetExperienceLevelTable: Result success! response=" + response.ToJson<ProfileResponseObject<ExperienceLevelTable>>(), DebugCategory.ProfileServer, null);
-			EventHandler<ExperienceLevelTable> getExperienceLevelTableResponse = ProfileServerProxyRebelled.GetExperienceLevelTableResponse;
+			EventHandler<ExperienceLevelTable> getExperienceLevelTableResponse = (EventHandler<ExperienceLevelTable>)ReflectionCacheInstance.GetExperienceLevelTableResponse.GetValue(this);
 			if (getExperienceLevelTableResponse == null)
 			{
 				return;
@@ -869,7 +900,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		public void OnGetLeaderboardDetoured(ProfileResponseObject<ProfileProperty<int>[][]> response)
 		{
 			LogHandler.PrintDebug("OnGetLeaderboard: Result success: " + response.IsSuccess.ToString() + ", response=" + response.ToJson<ProfileResponseObject<ProfileProperty<int>[][]>>(), DebugCategory.ProfileServer, null);
-			EventHandler<ProfileProperty<int>[][]> getLeaderboardResponse = ProfileServerProxyRebelled.GetLeaderboardResponse;
+			EventHandler<ProfileProperty<int>[][]> getLeaderboardResponse = (EventHandler<ProfileProperty<int>[][]>)ReflectionCacheInstance.GetLeaderboardResponse.GetValue(this);
 			if (getLeaderboardResponse == null)
 			{
 				return;
@@ -879,20 +910,22 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		public void OnGetGlobalChatDetoured(ProfileResponseObject<ChatResponse> response)
 		{
-			EventHandler<ChatResponse> getGlobalChatResponse = ProfileServerProxyRebelled.GetGlobalChatResponse;
+			return;
+/*			EventHandler<ChatResponse> getGlobalChatResponse = (EventHandler<ChatResponse>)ReflectionCacheInstance.GetGlobalChatResponse.GetValue(this);
 			if (getGlobalChatResponse == null)
 			{
 				return;
 			}
-			getGlobalChatResponse(this, response.ProfileObject);
+			getGlobalChatResponse(this, response.ProfileObject);*/
 		}
 
 		public void OnSendGlobalChatMessageDetoured(ProfileResponseObject<string> response)
 		{
-			if (!response.IsSuccess)
+			return;
+/*			if (!response.IsSuccess)
 			{
 				LogHandler.PrintError("OnSendGlobalChatMessage: Result success: " + response.IsSuccess.ToString() + ", response=" + response.ToJson<ProfileResponseObject<string>>(), null);
-				EventHandler<string> sendGlobalChatMessageResponse = ProfileServerProxyRebelled.SendGlobalChatMessageResponse;
+				EventHandler<string> sendGlobalChatMessageResponse = (EventHandler<string>)ReflectionCacheInstance.SendGlobalChatMessageResponse.GetValue(this);
 				if (sendGlobalChatMessageResponse == null)
 				{
 					return;
@@ -902,14 +935,14 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			}
 			else
 			{
-				EventHandler<string> sendGlobalChatMessageResponse2 = ProfileServerProxyRebelled.SendGlobalChatMessageResponse;
+				EventHandler<string> sendGlobalChatMessageResponse2 = (EventHandler<string>)ReflectionCacheInstance.SendGlobalChatMessageResponse.GetValue();
 				if (sendGlobalChatMessageResponse2 == null)
 				{
 					return;
 				}
 				sendGlobalChatMessageResponse2(this, null);
 				return;
-			}
+			}*/
 		}
 
 		public void OnSendNameTaggedDetoured(ProfileResponseObject<string> response)
@@ -938,17 +971,20 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			getUserMatchesResponse(this, profileObject.ToList<MatchProfile>());*/
 		}
 
+
+
 		protected override void OnAuthResponse(UserAuthorizationResponse authData)
 		{
-			Plugin.Debug_LogMessage("Auth thing");
-			EventHandler<UserAuthorizationResponse> authResponse = AuthResponse;
+			Plugin.Debug_LogMessage($"Auth thing {authData.HasRegistered} / {authData.id} / {authData.Token}");
+
+			EventHandler<UserAuthorizationResponse> authResponse = (EventHandler<UserAuthorizationResponse>)ReflectionCacheInstance.AuthResponse.GetValue(this);
 			if (authResponse == null)
 			{
-				Plugin.Debug_LogMessage("? thing");
 				return;
 			}
 			authResponse(this, authData);
 		}
+
 
 		// Token: 0x0600254E RID: 9550 RVA: 0x00087E10 File Offset: 0x00086010
 		protected override void OnAuthResponse(ProfileResponseObject<UserAuthorizationResponse> response)
@@ -966,7 +1002,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				this.OnErrorResponse(response.Meta, true);
 				return;
 			}
-			EventHandler<UserAuthorizationResponse> authResponse = AuthResponse;
+			EventHandler<UserAuthorizationResponse> authResponse = (EventHandler<UserAuthorizationResponse>)ReflectionCacheInstance.AuthResponse.GetValue(this);
 			if (authResponse == null)
 			{
 				return;
