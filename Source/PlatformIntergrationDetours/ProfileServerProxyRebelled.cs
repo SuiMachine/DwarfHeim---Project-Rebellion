@@ -1013,7 +1013,6 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		private IEnumerator DelayAuthResponse()
 		{
 			yield return null;
-			yield return new WaitForSecondsRealtime(10);
 			var guid = Guid.NewGuid();
 			OnAuthResponse(new UserAuthorizationResponse()
 			{
