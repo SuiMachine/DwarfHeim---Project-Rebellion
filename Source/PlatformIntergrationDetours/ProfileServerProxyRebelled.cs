@@ -5,6 +5,7 @@ using HarmonyLib;
 using Newtonsoft.Json;
 using PineCone;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -36,9 +37,9 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		[HarmonyPrefix]
 		[HarmonyPatch(typeof(ProfileServerProxy), nameof(ProfileServerProxy.ValidateSteamAuthTicketOLD))]
-		public static bool ValidateSteamAuthTicketOLD_Detoured(string username, uint appIDD)
+		public static bool ValidateSteamAuthTicketOLD_Detoured(string username, uint appID)
 		{
-			ProfileServerProxyRebelled.OtherInstance.ValidateSteamAuthTicketOLDDetoured(username, appIDD);
+			ProfileServerProxyRebelled.OtherInstance.ValidateSteamAuthTicketOLDDetoured(username, appID);
 			return false;
 		}
 
@@ -146,15 +147,6 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			ProfileServerProxyRebelled.OtherInstance.SendPlayerNameTaggedDetoured(id);
 			return false;
 		}
-
-		[HarmonyPrefix]
-		[HarmonyPatch(typeof(ProfileServerProxy), nameof(ProfileServerProxy.SendGlobalChatMessage))]
-		public static bool SendGlobalChatMessage_Detoured(string chat, string message, Action<string> errorCallback)
-		{
-			ProfileServerProxyRebelled.OtherInstance.SendGlobalChatMessageDetoured(chat, message, errorCallback);
-			return false;
-		}
-
 	}
 
 
@@ -235,7 +227,12 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void ValidateSteamAuthTicketRequestDetoured(ulong steamid, uint appID)
 		{
-			string text = new UserSteamAuthorizationRequest
+			Plugin.Debug_LogMessage("Here we'd ask external server to validate a copy, but stupid publisher shut down the servers, so...");
+			var guid = Guid.NewGuid();
+
+			//Stupid, cause events are not set up yet
+			StartCoroutine(DelayAuthResponse());
+/*			string text = new UserSteamAuthorizationRequest
 			{
 				SteamID = steamid,
 				AppID = appID,
@@ -261,7 +258,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse),
 				Authentication = true
 			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<UserAuthorizationResponse>>(httpRequest, new Action<ProfileResponseObject<UserAuthorizationResponse>>(this.OnAuthResponse), httpErrorHandler));
+			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<UserAuthorizationResponse>>(httpRequest, new Action<ProfileResponseObject<UserAuthorizationResponse>>(this.OnAuthResponse), httpErrorHandler));*/
 		}
 
 		private System.Collections.IEnumerator ValidateSteamAuthTicketRequestOLD(string username, uint appID)
@@ -325,6 +322,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void CheckUsernameValidityRequest(string playerName)
 		{
+			Plugin.Debug_LogMessage("Check user validity request");
 			HttpHeaders httpHeaders = new HttpHeaders
 			{
 				Authorization = PlayerProfile.AuthenticationService.AuthToken
@@ -340,11 +338,12 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				BaseMessage = "[CheckUsernameValidityRequest] ",
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
 			};
-			base.StartCoroutine(HTTPController.GET<ProfileResponseObject<UserValidatePlayerNameResponse>>(httpRequest, new Action<ProfileResponseObject<UserValidatePlayerNameResponse>>(this.OnCheckUsernameValidityResponse), httpErrorHandler, null));
+			StartCoroutine(HTTPController.GET<ProfileResponseObject<UserValidatePlayerNameResponse>>(httpRequest, new Action<ProfileResponseObject<UserValidatePlayerNameResponse>>(this.OnCheckUsernameValidityResponse), httpErrorHandler, null));
 		}
 
 		private void RegisterPlayerRequest(string id, string username, uint nameid)
 		{
+			Plugin.Debug_LogMessage("Register player data request");
 			string text = new UserRegisterRequest
 			{
 				id = id,
@@ -367,11 +366,12 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				BaseMessage = "[RegisterPlayerRequest] ",
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
 			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<UserRegisterResponse>>(httpRequest, new Action<ProfileResponseObject<UserRegisterResponse>>(this.OnRegisterPlayerResponse), httpErrorHandler));
+			StartCoroutine(HTTPController.POST<ProfileResponseObject<UserRegisterResponse>>(httpRequest, new Action<ProfileResponseObject<UserRegisterResponse>>(this.OnRegisterPlayerResponse), httpErrorHandler));
 		}
 
 		private void GetPlayerDataRequest(string id)
 		{
+			Plugin.Debug_LogMessage("Yo player data request");
 			HttpHeaders httpHeaders = new HttpHeaders
 			{
 				Authorization = PlayerProfile.AuthenticationService.AuthToken
@@ -387,7 +387,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				BaseMessage = "[GetPlayerDataRequest] ",
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
 			};
-			base.StartCoroutine(HTTPController.GET<ProfileResponseObject<ProfileData>>(httpRequest, new Action<ProfileResponseObject<ProfileData>>(this.OnGetPlayerDataResponse), httpErrorHandler, null));
+			StartCoroutine(HTTPController.GET<ProfileResponseObject<ProfileData>>(httpRequest, new Action<ProfileResponseObject<ProfileData>>(this.OnGetPlayerDataResponse), httpErrorHandler, null));
 		}
 
 		private System.Collections.IEnumerator GetPlayerDataRequestOLD()
@@ -462,7 +462,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				BaseMessage = "[GetUserFriendsRequest] ",
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
 			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<ProfileData[]>>(httpRequest, new Action<ProfileResponseObject<ProfileData[]>>(this.OnGetUserFriends), httpErrorHandler));
+			StartCoroutine(HTTPController.POST<ProfileResponseObject<ProfileData[]>>(httpRequest, new Action<ProfileResponseObject<ProfileData[]>>(this.OnGetUserFriends), httpErrorHandler));
 		}
 
 		public void OnGetUserFriendsDetoured(ProfileResponseObject<ProfileData[]> response)
@@ -531,7 +531,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				BaseMessage = "[GetUserMatchesRequest] ",
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
 			};
-			base.StartCoroutine(HTTPController.GET<ProfileResponseObject<MatchProfile[]>>(httpRequest, new Action<ProfileResponseObject<MatchProfile[]>>(this.OnGetUserMatches), httpErrorHandler, null));
+			StartCoroutine(HTTPController.GET<ProfileResponseObject<MatchProfile[]>>(httpRequest, new Action<ProfileResponseObject<MatchProfile[]>>(this.OnGetUserMatches), httpErrorHandler, null));
 		}
 
 		public void SetUserUnlockRequestDetoured(string unlockId)
@@ -555,7 +555,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				LogHandler.PrintDebug(string.Format("{0}: {1}", meta.Code, meta.Message), DebugCategory.Network, null);
 			};
 			HttpErrorHandler httpErrorHandler2 = httpErrorHandler;
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, delegate (ProfileResponseObject<string> res)
+			StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, delegate (ProfileResponseObject<string> res)
 			{
 				LogHandler.PrintDebug(string.Format("Unlock request success: {0}, {1}", res.IsSuccess, res.Meta.ToString()), DebugCategory.ProfileServer, null);
 			}, httpErrorHandler2));
@@ -633,7 +633,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				BaseMessage = "[SendPlayerUpdate] ",
 				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
 			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnPlayerUpdateResponse), httpErrorHandler));
+			StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnPlayerUpdateResponse), httpErrorHandler));
 		}
 
 		public void GetPlayerCosmeticDetoured(string id)
@@ -936,6 +936,55 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				return;
 			}
 			getUserMatchesResponse(this, profileObject.ToList<MatchProfile>());*/
+		}
+
+		protected override void OnAuthResponse(UserAuthorizationResponse authData)
+		{
+			Plugin.Debug_LogMessage("Auth thing");
+			EventHandler<UserAuthorizationResponse> authResponse = AuthResponse;
+			if (authResponse == null)
+			{
+				Plugin.Debug_LogMessage("? thing");
+				return;
+			}
+			authResponse(this, authData);
+		}
+
+		// Token: 0x0600254E RID: 9550 RVA: 0x00087E10 File Offset: 0x00086010
+		protected override void OnAuthResponse(ProfileResponseObject<UserAuthorizationResponse> response)
+		{
+			Plugin.Debug_LogMessage("Auth thing");
+			if (!response.IsSuccess)
+			{
+				this.OnErrorResponse(response.Meta, true);
+				return;
+			}
+			UserAuthorizationResponse profileObject = response.ProfileObject;
+			LogHandler.PrintDebug("OnAuthResponse: Result success: " + profileObject.ToJson<UserAuthorizationResponse>(), DebugCategory.ProfileServer, null);
+			if (string.IsNullOrEmpty(profileObject.Token))
+			{
+				this.OnErrorResponse(response.Meta, true);
+				return;
+			}
+			EventHandler<UserAuthorizationResponse> authResponse = AuthResponse;
+			if (authResponse == null)
+			{
+				return;
+			}
+			authResponse(this, profileObject);
+		}
+
+		private IEnumerator DelayAuthResponse()
+		{
+			yield return null;
+			yield return new WaitForSecondsRealtime(10);
+			var guid = Guid.NewGuid();
+			OnAuthResponse(new UserAuthorizationResponse()
+			{
+				HasRegistered = true,
+				id = guid.ToString(),
+				Token = guid.ToString(),
+			});
 		}
 	}
 }

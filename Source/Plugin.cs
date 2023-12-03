@@ -20,6 +20,26 @@ public class Plugin : BaseUnityPlugin
 	}
 
 	public static void LogMessage(object message) => LoggerInstance.LogMessage(message);
+	public static void Debug_LogMessage(object message)
+	{
+#if DEBUG
+		LoggerInstance.LogMessage(message);
+#endif
+	} 
+
 	public static void LogError(object message) => LoggerInstance.LogError(message);
+	public static void Debug_LogError(object message)
+	{
+#if DEBUG
+		LoggerInstance.LogError(message);
+#endif
+	}
+
 	public static void LogWarning(object message) => LoggerInstance.LogWarning(message);
+	public static void Debug_LogWarning(object message)
+	{
+#if DEBUG
+		LoggerInstance.LogWarning(message);
+#endif
+	}
 }
