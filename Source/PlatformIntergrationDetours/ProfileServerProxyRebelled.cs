@@ -4,6 +4,7 @@ using DwarfHeim.UI;
 using HarmonyLib;
 using Newtonsoft.Json;
 using PineCone;
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -1013,12 +1014,12 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		private IEnumerator DelayAuthResponse()
 		{
 			yield return null;
-			var guid = Guid.NewGuid();
+			var steamID = SteamClient.SteamId.ToString();
 			OnAuthResponse(new UserAuthorizationResponse()
 			{
 				HasRegistered = true,
-				id = guid.ToString(),
-				Token = guid.ToString(),
+				id = steamID,
+				Token = steamID
 			});
 		}
 	}
