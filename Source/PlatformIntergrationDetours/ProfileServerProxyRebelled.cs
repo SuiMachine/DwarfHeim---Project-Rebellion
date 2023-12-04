@@ -175,11 +175,11 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			{
 				var reflectionSelf = typeof(ReflectionCache).GetFields(BindingFlags.Instance | BindingFlags.Public);
 
-				foreach(var field in reflectionSelf)
+				foreach (var field in reflectionSelf)
 				{
 					var name = field.Name;
 					var fieldToFind = typeof(ProfileServerProxy).GetField(name, BindingFlags.Static | BindingFlags.NonPublic); //C# is lying - these are private!
-					if(fieldToFind == null)
+					if (fieldToFind == null)
 					{
 						Plugin.LogError($"Failed to get an event reflection {name} - not good!");
 						continue;
@@ -191,7 +191,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 			}
 		}
-		
+
 		public static ReflectionCache ReflectionCacheInstance = new ReflectionCache();
 
 		public static new event Action<string> RegisterPlayerResponse;
@@ -267,7 +267,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			yield return null;
 
 			var steamID = SteamClient.SteamId;
-			if(steamID == 0)
+			if (steamID == 0)
 			{
 				OnErrorResponse(new MetaInfo()
 				{
@@ -327,29 +327,66 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void GetPlayerDataRequest(string id)
 		{
-			Plugin.Debug_LogMessage("Yo player data request");
-			OnGetPlayerDataResponse(new ProfileData()
+			Plugin.Debug_LogMessage($"Get player data request for {id}");
+			if (id == SteamClient.SteamId.Value.ToString())
 			{
-				
-			});
+				OnGetPlayerDataResponse(new ProfileData()
+				{
+					id = id,
+					display_name = SteamClient.Name,
+					NameID = 0,
+					PlayerName = SteamClient.Name,
+					TimeInfo = new UserTimeInfo()
+					{
+						DateJoined = DateTime.MinValue,
+						LastLogin = DateTime.UtcNow,
+						TimePlayed = 0 //This should probably use Steam... but I don't know if it can
+					},
+					ShopInfo = new UserShopInfo()
+					{
+						IngameCurrency = 0,
+						PremiumCurrency = 0,
+					},
+					CustomizationInfo = new UserCustomizationInfo()
+					{
+						AvatarID = 0,
+						CosmeticIDs = new string[0],
+						EquippedCosmeticIDs = new string[0],
+						NameChangesRemaining = 0,
+					},
+					AchievementIDs = new string[]
+					{
+						//This might need to be loaded from some file instead or maybe steamworks?
+					},
+					ProgressionInfo = new UserProgressionInfo()
+					{
+						//Also probably some data on HDD now that servers are dead
+						Experience = 0,
+						Level = 1,
+						Unlocks = new string[0]
+					}
+				});
+			}
+			else
+			{
+				Plugin.Debug_LogError($"Not implemented?");
+				SteamId steamIdCasted = ulong.Parse(id);
+				OnGetPlayerDataResponse(new ProfileData()
+				{
+					id = id,
+					NameID = 0,
+					PlayerName = new Friend(steamIdCasted).Name,
+					display_name = new Friend(steamIdCasted).Name,
+					ProgressionInfo = new UserProgressionInfo()
+					{
+						Experience = 0,
+						Level = 1,
+						Unlocks = new string[] {}
+					}
+				});;
 
-/*			Plugin.Debug_LogMessage("Yo player data request");
-			HttpHeaders httpHeaders = new HttpHeaders
-			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text = "userprofile/id/";
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text + id,
-				Headers = httpHeaders
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[GetPlayerDataRequest] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			StartCoroutine(HTTPController.GET<ProfileResponseObject<ProfileData>>(httpRequest, new Action<ProfileResponseObject<ProfileData>>(this.OnGetPlayerDataResponse), httpErrorHandler, null));*/
+			}
+
 		}
 
 		private System.Collections.IEnumerator GetPlayerDataRequestOLD()
@@ -528,51 +565,51 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		{
 			Plugin.LogError("Why the f*** would you even try sending a report for a bug report for dead game?!");
 			return;
-/*			string text = bugReport.ToJson<BugReport>();
-			HttpHeaders httpHeaders = new HttpHeaders
-			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text2 = "bugreport/create/";
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text2,
-				Headers = httpHeaders,
-				Json = text
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[SendBugReport] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnSendBugReportResponse), httpErrorHandler));*/
+			/*			string text = bugReport.ToJson<BugReport>();
+						HttpHeaders httpHeaders = new HttpHeaders
+						{
+							Authorization = PlayerProfile.AuthenticationService.AuthToken
+						};
+						string text2 = "bugreport/create/";
+						HttpRequest httpRequest = new HttpRequest
+						{
+							Url = ProfileServerProxy.BASE_URL + text2,
+							Headers = httpHeaders,
+							Json = text
+						};
+						HttpErrorHandler httpErrorHandler = new HttpErrorHandler
+						{
+							BaseMessage = "[SendBugReport] ",
+							Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
+						};
+						base.StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnSendBugReportResponse), httpErrorHandler));*/
 		}
 
 		public void SendBugReportBlobDetoured(string id, string filePostFix, FileStream blob)
 		{
 			Plugin.LogError("Why the f*** would you even try sending a report for a bug report for dead game?!");
 			return;
-/*			Debug.Log("SendBugReportBlob: Sending bug report blob for id: " + id);
-			HttpBinaryHeaders httpBinaryHeaders = new HttpBinaryHeaders
-			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken,
-				RequestId = id,
-				FilePostFix = filePostFix,
-				ContentType = HttpContentType.ApplicationOctetStream
-			};
-			string text = "bugreport/createblobbinary/";
-			HttpBinaryRequest httpBinaryRequest = new HttpBinaryRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text,
-				Headers = httpBinaryHeaders,
-				Content = blob
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[SendBugReportBlob] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			base.StartCoroutine(HTTPController.POST_BINARY<ProfileResponseObject<string>>(httpBinaryRequest, new Action<ProfileResponseObject<string>>(this.OnSendBugReportBlobResponse), httpErrorHandler));*/
+			/*			Debug.Log("SendBugReportBlob: Sending bug report blob for id: " + id);
+						HttpBinaryHeaders httpBinaryHeaders = new HttpBinaryHeaders
+						{
+							Authorization = PlayerProfile.AuthenticationService.AuthToken,
+							RequestId = id,
+							FilePostFix = filePostFix,
+							ContentType = HttpContentType.ApplicationOctetStream
+						};
+						string text = "bugreport/createblobbinary/";
+						HttpBinaryRequest httpBinaryRequest = new HttpBinaryRequest
+						{
+							Url = ProfileServerProxy.BASE_URL + text,
+							Headers = httpBinaryHeaders,
+							Content = blob
+						};
+						HttpErrorHandler httpErrorHandler = new HttpErrorHandler
+						{
+							BaseMessage = "[SendBugReportBlob] ",
+							Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
+						};
+						base.StartCoroutine(HTTPController.POST_BINARY<ProfileResponseObject<string>>(httpBinaryRequest, new Action<ProfileResponseObject<string>>(this.OnSendBugReportBlobResponse), httpErrorHandler));*/
 		}
 
 		public void SendPlayerUpdateDetoured(PlayerUpdateRequest updateRequest)
@@ -622,24 +659,64 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		public void GetPlayerSteamDetoured(ulong[] ids)
 		{
-			Debug.Log("GetPlayerStean: Getting cosmetics for steam id : " + ids.ToJson<ulong[]>());
-			HttpHeaders httpHeaders = new HttpHeaders
+			Plugin.Debug_LogMessage($"Faking player steam data for {string.Join(",", ids)}");
+
+			ProfileData[] temp = new ProfileData[ids.Length];
+			for(int i=0; i<temp.Length; i++)
 			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text = "player/id/steam/";
-			HttpRequest httpRequest = new HttpRequest
+				temp[i] = new ProfileData()
+				{
+					AchievementIDs = new string[0],
+					CustomizationInfo = new UserCustomizationInfo()
+					{
+						AvatarID = 0,
+						CosmeticIDs = new string[0],
+						EquippedCosmeticIDs = new string[0],
+						NameChangesRemaining = 0
+					},
+					display_name = new Friend((SteamId)ids[i]).Name,
+					id = ids[i].ToString(),
+					NameID = 0,
+					PlatformIDs = new UserPlatformIDs()
+					{
+						sSteamID = ids[i].ToString(),
+						SteamID = ids[i]
+					},
+					PlayerName = new Friend((SteamId)ids[i]).Name,
+					ProgressionInfo = new UserProgressionInfo()
+					{
+						Experience = 0,
+						Level = 1,
+						Unlocks = new string[0],
+					},
+					MatchInfo = new UserMatchInfo(),
+					PublicRoles = new string[0],
+					ShopInfo = new UserShopInfo()
+					{
+						IngameCurrency = 0,
+						PremiumCurrency = 0
+					},
+					TimeInfo = new UserTimeInfo()
+					{
+						DateJoined = DateTime.MinValue,
+						LastLogin = DateTime.UtcNow,
+						TimePlayed = 0
+					}
+				};
+			}
+
+			DwarfHeim.PlatformUserIntegration.ProfileResponseObject<ProfileData[]> response = new ProfileResponseObject<ProfileData[]>()
 			{
-				Url = ProfileServerProxy.BASE_URL + text,
-				Headers = httpHeaders,
-				Json = ids.ToJson<ulong[]>()
+				IsSuccess = true,
+				Meta = new MetaInfo()
+				{
+					Code = 0,
+					Error = "",
+					Message = "",
+				},
+				ProfileObject = temp
 			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[GetPlayerSteam] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<ProfileData[]>>(httpRequest, new Action<ProfileResponseObject<ProfileData[]>>(this.OnGetPlayerSteamResponse), httpErrorHandler));
+			OnGetPlayerSteamResponse(response);
 		}
 
 		public void SendPlayerNameTaggedDetoured(string id)
@@ -666,67 +743,67 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		public void SendGlobalChatMessageDetoured(string chat, string message, Action<string> errorCallback)
 		{
 			return;
-/*			Debug.Log("SendChatMessage: Sending message=" + message + " to chat=" + chat);
-			HttpHeaders httpHeaders = new HttpHeaders
-			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text = "chat/send/";
-			ChatMessage chatMessage = new ChatMessage
-			{
-				ChatID = chat,
-				SenderID = PlayerProfile.ProfileData.id,
-				Message = message
-			};
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text,
-				Headers = httpHeaders,
-				Json = chatMessage.ToJson<ChatMessage>()
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "",
-				Callback = delegate (MetaInfo meta, bool auth)
-				{
-					Action<string> errorCallback2 = errorCallback;
-					if (errorCallback2 == null)
-					{
-						return;
-					}
-					errorCallback2(meta.Message);
-				}
-			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnSendGlobalChatMessage), httpErrorHandler));*/
+			/*			Debug.Log("SendChatMessage: Sending message=" + message + " to chat=" + chat);
+						HttpHeaders httpHeaders = new HttpHeaders
+						{
+							Authorization = PlayerProfile.AuthenticationService.AuthToken
+						};
+						string text = "chat/send/";
+						ChatMessage chatMessage = new ChatMessage
+						{
+							ChatID = chat,
+							SenderID = PlayerProfile.ProfileData.id,
+							Message = message
+						};
+						HttpRequest httpRequest = new HttpRequest
+						{
+							Url = ProfileServerProxy.BASE_URL + text,
+							Headers = httpHeaders,
+							Json = chatMessage.ToJson<ChatMessage>()
+						};
+						HttpErrorHandler httpErrorHandler = new HttpErrorHandler
+						{
+							BaseMessage = "",
+							Callback = delegate (MetaInfo meta, bool auth)
+							{
+								Action<string> errorCallback2 = errorCallback;
+								if (errorCallback2 == null)
+								{
+									return;
+								}
+								errorCallback2(meta.Message);
+							}
+						};
+						base.StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnSendGlobalChatMessage), httpErrorHandler));*/
 		}
 
 		public void GetGlobalChatDetoured(string chat, int amount = -1, Action<string> errorCallback = null)
 		{
 			return;
-/*			HttpHeaders httpHeaders = new HttpHeaders
-			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text = "chat/id/" + chat + ((amount < 0) ? "" : string.Format("/{0}", amount));
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text,
-				Headers = httpHeaders
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[SendGlobalChatMessage] ",
-				Callback = delegate (MetaInfo meta, bool auth)
-				{
-					Action<string> errorCallback2 = errorCallback;
-					if (errorCallback2 == null)
-					{
-						return;
-					}
-					errorCallback2(meta.Message);
-				}
-			};
-			base.StartCoroutine(HTTPController.GET<ProfileResponseObject<ChatResponse>>(httpRequest, new Action<ProfileResponseObject<ChatResponse>>(this.OnGetGlobalChat), httpErrorHandler, null));*/
+			/*			HttpHeaders httpHeaders = new HttpHeaders
+						{
+							Authorization = PlayerProfile.AuthenticationService.AuthToken
+						};
+						string text = "chat/id/" + chat + ((amount < 0) ? "" : string.Format("/{0}", amount));
+						HttpRequest httpRequest = new HttpRequest
+						{
+							Url = ProfileServerProxy.BASE_URL + text,
+							Headers = httpHeaders
+						};
+						HttpErrorHandler httpErrorHandler = new HttpErrorHandler
+						{
+							BaseMessage = "[SendGlobalChatMessage] ",
+							Callback = delegate (MetaInfo meta, bool auth)
+							{
+								Action<string> errorCallback2 = errorCallback;
+								if (errorCallback2 == null)
+								{
+									return;
+								}
+								errorCallback2(meta.Message);
+							}
+						};
+						base.StartCoroutine(HTTPController.GET<ProfileResponseObject<ChatResponse>>(httpRequest, new Action<ProfileResponseObject<ChatResponse>>(this.OnGetGlobalChat), httpErrorHandler, null));*/
 		}
 
 		public void GetLeaderboardDetoured(int amount)
@@ -843,38 +920,38 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		public void OnGetGlobalChatDetoured(ProfileResponseObject<ChatResponse> response)
 		{
 			return;
-/*			EventHandler<ChatResponse> getGlobalChatResponse = (EventHandler<ChatResponse>)ReflectionCacheInstance.GetGlobalChatResponse.GetValue(this);
-			if (getGlobalChatResponse == null)
-			{
-				return;
-			}
-			getGlobalChatResponse(this, response.ProfileObject);*/
+			/*			EventHandler<ChatResponse> getGlobalChatResponse = (EventHandler<ChatResponse>)ReflectionCacheInstance.GetGlobalChatResponse.GetValue(this);
+						if (getGlobalChatResponse == null)
+						{
+							return;
+						}
+						getGlobalChatResponse(this, response.ProfileObject);*/
 		}
 
 		public void OnSendGlobalChatMessageDetoured(ProfileResponseObject<string> response)
 		{
 			return;
-/*			if (!response.IsSuccess)
-			{
-				LogHandler.PrintError("OnSendGlobalChatMessage: Result success: " + response.IsSuccess.ToString() + ", response=" + response.ToJson<ProfileResponseObject<string>>(), null);
-				EventHandler<string> sendGlobalChatMessageResponse = (EventHandler<string>)ReflectionCacheInstance.SendGlobalChatMessageResponse.GetValue(this);
-				if (sendGlobalChatMessageResponse == null)
-				{
-					return;
-				}
-				sendGlobalChatMessageResponse(this, response.Meta.Message);
-				return;
-			}
-			else
-			{
-				EventHandler<string> sendGlobalChatMessageResponse2 = (EventHandler<string>)ReflectionCacheInstance.SendGlobalChatMessageResponse.GetValue();
-				if (sendGlobalChatMessageResponse2 == null)
-				{
-					return;
-				}
-				sendGlobalChatMessageResponse2(this, null);
-				return;
-			}*/
+			/*			if (!response.IsSuccess)
+						{
+							LogHandler.PrintError("OnSendGlobalChatMessage: Result success: " + response.IsSuccess.ToString() + ", response=" + response.ToJson<ProfileResponseObject<string>>(), null);
+							EventHandler<string> sendGlobalChatMessageResponse = (EventHandler<string>)ReflectionCacheInstance.SendGlobalChatMessageResponse.GetValue(this);
+							if (sendGlobalChatMessageResponse == null)
+							{
+								return;
+							}
+							sendGlobalChatMessageResponse(this, response.Meta.Message);
+							return;
+						}
+						else
+						{
+							EventHandler<string> sendGlobalChatMessageResponse2 = (EventHandler<string>)ReflectionCacheInstance.SendGlobalChatMessageResponse.GetValue();
+							if (sendGlobalChatMessageResponse2 == null)
+							{
+								return;
+							}
+							sendGlobalChatMessageResponse2(this, null);
+							return;
+						}*/
 		}
 
 		public void OnSendNameTaggedDetoured(ProfileResponseObject<string> response)
@@ -885,22 +962,22 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		public void OnGetUserMatchesDetoured(ProfileResponseObject<MatchProfile[]> response)
 		{
 			return;
-/*			if (!response.IsSuccess)
-			{
-				if (response.Meta.Code != 404L)
-				{
-					this.OnErrorResponse(response.Meta, false);
-				}
-				return;
-			}
-			MatchProfile[] profileObject = response.ProfileObject;
-			LogHandler.PrintDebug("OnGetUserMatches: Result success: " + profileObject.ToJson<MatchProfile[]>(), DebugCategory.ProfileServer, null);
-			EventHandler<List<MatchProfile>> getUserMatchesResponse = ProfileServerProxyRebelled.GetUserMatchesResponse;
-			if (getUserMatchesResponse == null)
-			{
-				return;
-			}
-			getUserMatchesResponse(this, profileObject.ToList<MatchProfile>());*/
+			/*			if (!response.IsSuccess)
+						{
+							if (response.Meta.Code != 404L)
+							{
+								this.OnErrorResponse(response.Meta, false);
+							}
+							return;
+						}
+						MatchProfile[] profileObject = response.ProfileObject;
+						LogHandler.PrintDebug("OnGetUserMatches: Result success: " + profileObject.ToJson<MatchProfile[]>(), DebugCategory.ProfileServer, null);
+						EventHandler<List<MatchProfile>> getUserMatchesResponse = ProfileServerProxyRebelled.GetUserMatchesResponse;
+						if (getUserMatchesResponse == null)
+						{
+							return;
+						}
+						getUserMatchesResponse(this, profileObject.ToList<MatchProfile>());*/
 		}
 
 
