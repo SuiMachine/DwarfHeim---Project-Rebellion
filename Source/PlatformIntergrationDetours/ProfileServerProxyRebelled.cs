@@ -254,118 +254,47 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void ValidateSteamAuthTicketRequestDetoured(ulong steamid, uint appID)
 		{
-			Plugin.Debug_LogMessage("Here we'd ask external server to validate a copy, but stupid publisher shut down the servers, so...");
-			var guid = Guid.NewGuid();
-
-			//Stupid, cause events are not set up yet
-			StartCoroutine(DelayAuthResponse());
-/*			string text = new UserSteamAuthorizationRequest
+			OnAuthResponse(new UserAuthorizationResponse()
 			{
-				SteamID = steamid,
-				AppID = appID,
-				TicketData = PlayerProfile.AuthenticationService.PlatformAuthTicket
-			}.ToJson();
-
-			HttpHeaders httpHeaders = new HttpHeaders
-			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-
-			string text2 = "player/auth/client/steam";
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text2,
-				Headers = httpHeaders,
-				Json = text
-			};
-
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[ValidateSteamAuthTicketRequest] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse),
-				Authentication = true
-			};
-			base.StartCoroutine(HTTPController.POST<ProfileResponseObject<UserAuthorizationResponse>>(httpRequest, new Action<ProfileResponseObject<UserAuthorizationResponse>>(this.OnAuthResponse), httpErrorHandler));*/
+				HasRegistered = true,
+				id = steamid.ToString(),
+				Token = $"{steamid}/{appID}"
+			});
 		}
 
-		private System.Collections.IEnumerator ValidateSteamAuthTicketRequestOLD(string username, uint appID)
+		private IEnumerator ValidateSteamAuthTicketRequestOLD(string username, uint appID)
 		{
-			WWWForm wwwform = new WWWForm();
-			wwwform.AddField("authTicket", PlayerProfile.AuthenticationService.PlatformAuthTicket);
-			wwwform.AddField("username", username);
-			wwwform.AddField("appid", appID.ToString());
-			string text = ProfileServerProxy.BASE_URL;
-			text += "accounts/steamticket/";
-			using (UnityWebRequest www = UnityWebRequest.Post(text, wwwform))
+			yield return null;
+
+			var steamID = SteamClient.SteamId;
+			if(steamID == 0)
 			{
-				www.timeout = 30;
-				yield return www.SendWebRequest();
-				if (www.isNetworkError || www.isHttpError)
+				OnErrorResponse(new MetaInfo()
 				{
-					string text2 = "[ValidateSteamAuthTicketRequest] Error: " + www.error;
-					this.OnErrorResponse(new MetaInfo
-					{
-						Code = www.responseCode,
-						Message = text2,
-						E = null
-					}, false);
-				}
-				else
-				{
-					try
-					{
-						UserAuthorizationResponse userAuthorizationResponse = www.downloadHandler.text.JsonToObj<UserAuthorizationResponse>();
-						Debug.Log(JsonUtility.ToJson(userAuthorizationResponse));
-						if (!string.IsNullOrEmpty(userAuthorizationResponse.Token))
-						{
-							LogHandler.PrintDebug("Received Auth response from Profile Server", DebugCategory.ProfileServer, null);
-							this.OnAuthResponse(userAuthorizationResponse);
-						}
-						else
-						{
-							string text3 = "[ValidateSteamAuthTicketRequest] Server returned: " + www.downloadHandler.text;
-							this.OnErrorResponse(new MetaInfo
-							{
-								Code = www.responseCode,
-								Message = text3,
-								E = null
-							}, false);
-						}
-					}
-					catch (Exception ex)
-					{
-						string text4 = "[ValidateSteamAuthTicketRequest] Server returned: " + www.downloadHandler.text;
-						this.OnErrorResponse(new MetaInfo
-						{
-							Code = www.responseCode,
-							Message = text4,
-							E = ex
-						}, false);
-					}
-				}
+					Code = 666,
+					Message = "No Steam id",
+					E = null
+				});
 			}
-			yield break;
+			else
+			{
+				OnAuthResponse(new UserAuthorizationResponse()
+				{
+					HasRegistered = true,
+					id = steamID.Value.ToString(),
+					Token = $"{steamID.Value}/{appID}"
+				});
+			}
 		}
 
 		private void CheckUsernameValidityRequest(string playerName)
 		{
-			Plugin.Debug_LogMessage("Check user validity request");
-			HttpHeaders httpHeaders = new HttpHeaders
+			OnCheckUsernameValidityResponse(new UserValidatePlayerNameResponse()
 			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text = "userprofile/checkname/";
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text + playerName,
-				Headers = httpHeaders
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[CheckUsernameValidityRequest] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			StartCoroutine(HTTPController.GET<ProfileResponseObject<UserValidatePlayerNameResponse>>(httpRequest, new Action<ProfileResponseObject<UserValidatePlayerNameResponse>>(this.OnCheckUsernameValidityResponse), httpErrorHandler, null));
+				NameID = 0,
+				PlayerName = playerName,
+				PlayerNameUnique = false
+			});
 		}
 
 		private void RegisterPlayerRequest(string id, string username, uint nameid)
@@ -398,6 +327,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void GetPlayerDataRequest(string id)
 		{
+			Plugin.Debug_LogMessage("Yo player data request");
 			OnGetPlayerDataResponse(new ProfileData()
 			{
 				
@@ -476,6 +406,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void GetFriendsDataRequest(List<ulong> steamIDs)
 		{
+			Plugin.LogMessage("Get friends data request to do");
 			string text = steamIDs.ToArray().ToJson<ulong[]>();
 			Debug.Log("Sending friends ids: " + text);
 			HttpHeaders httpHeaders = new HttpHeaders
@@ -987,7 +918,6 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		}
 
 
-		// Token: 0x0600254E RID: 9550 RVA: 0x00087E10 File Offset: 0x00086010
 		protected override void OnAuthResponse(ProfileResponseObject<UserAuthorizationResponse> response)
 		{
 			Plugin.Debug_LogMessage("Auth thing");
@@ -1009,18 +939,6 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				return;
 			}
 			authResponse(this, profileObject);
-		}
-
-		private IEnumerator DelayAuthResponse()
-		{
-			yield return null;
-			var steamID = SteamClient.SteamId.ToString();
-			OnAuthResponse(new UserAuthorizationResponse()
-			{
-				HasRegistered = true,
-				id = steamID,
-				Token = steamID
-			});
 		}
 	}
 }
