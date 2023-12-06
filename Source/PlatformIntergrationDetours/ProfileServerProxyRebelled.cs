@@ -149,6 +149,22 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			ProfileServerProxyRebelled.OtherInstance.SendPlayerNameTaggedDetoured(id);
 			return false;
 		}
+
+		[HarmonyPrefix]
+		[HarmonyPatch(typeof(ProfileServerProxy), nameof(ProfileServerProxy.GetCosmeticsByUnlockType))]
+		public static bool GetCosmeticsByUnlockType_Detoured(string unlocktype)
+		{
+			ProfileServerProxyRebelled.OtherInstance.GetCosmeticsByUnlockTypeDetoured(unlocktype);
+			return false;
+		}
+
+		[HarmonyPrefix]
+		[HarmonyPatch(typeof(ProfileServerProxy), nameof(ProfileServerProxy.GetExperienceLevelTable))]
+		public static bool GetExperienceLevelTable_Detoured()
+		{
+			ProfileServerProxyRebelled.OtherInstance.GetExperienceLevelTableDetoured();
+			return false;
+		}		
 	}
 
 
@@ -254,12 +270,19 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void ValidateSteamAuthTicketRequestDetoured(ulong steamid, uint appID)
 		{
-			OnAuthResponse(new UserAuthorizationResponse()
+			StartCoroutine(DelayAuthorization(new UserAuthorizationResponse()
 			{
 				HasRegistered = true,
 				id = steamid.ToString(),
 				Token = $"{steamid}/{appID}"
-			});
+			}));
+		}
+
+		private IEnumerator DelayAuthorization(UserAuthorizationResponse userAuthorizationResponse)
+		{
+			//yield return new WaitForSeconds(5);
+			yield return null;
+			OnAuthResponse(userAuthorizationResponse);
 		}
 
 		private IEnumerator ValidateSteamAuthTicketRequestOLD(string username, uint appID)
@@ -381,9 +404,9 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					{
 						Experience = 0,
 						Level = 1,
-						Unlocks = new string[] {}
+						Unlocks = new string[] { }
 					}
-				});;
+				}); ;
 
 			}
 
@@ -443,26 +466,65 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void GetFriendsDataRequest(List<ulong> steamIDs)
 		{
-			Plugin.LogMessage("Get friends data request to do");
-			string text = steamIDs.ToArray().ToJson<ulong[]>();
-			Debug.Log("Sending friends ids: " + text);
-			HttpHeaders httpHeaders = new HttpHeaders
+			Plugin.LogMessage("Faking get friends data request");
+			var profiles = new ProfileData[steamIDs.Count];
+			for(int i=0;i<profiles.Length; i++)
 			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text2 = "userprofile/id/steam/";
-			HttpRequest httpRequest = new HttpRequest
+				var profileSteamID = steamIDs[i];
+
+				profiles[i] = new ProfileData()
+				{
+					AchievementIDs = new string[0],
+					CustomizationInfo = new UserCustomizationInfo()
+					{
+						AvatarID = 0,
+						CosmeticIDs = new string[0],
+						EquippedCosmeticIDs = new string[0],
+						NameChangesRemaining = 0,
+					},
+					display_name = new Friend(profileSteamID).Name,
+					NameID = 0,
+					PlayerName = new Friend(profileSteamID).Name,
+					id = profileSteamID.ToString(),
+					MatchInfo = new UserMatchInfo() {},
+					PublicRoles = new string[0],
+					PlatformIDs = new UserPlatformIDs()
+					{
+						sSteamID = profileSteamID.ToString(),
+						SteamID = profileSteamID
+					},
+					ProgressionInfo = new UserProgressionInfo()
+					{
+						Experience = 0,
+						Level = 1,
+						Unlocks = new string[0]
+					},
+					ShopInfo = new UserShopInfo()
+					{
+						IngameCurrency = 0,
+						PremiumCurrency = 0
+					},
+					TimeInfo = new UserTimeInfo()
+					{
+						DateJoined = DateTime.MinValue,
+						LastLogin = DateTime.Now,
+						TimePlayed = 0
+					}
+				};
+			}
+
+			var response = new ProfileResponseObject<ProfileData[]>()
 			{
-				Url = ProfileServerProxy.BASE_URL + text2,
-				Headers = httpHeaders,
-				Json = text
+				IsSuccess = true,
+				Meta = new MetaInfo()
+				{
+					Message = "",
+					Code = 0,
+					Error = ""
+				},
+				ProfileObject = profiles
 			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[GetUserFriendsRequest] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			StartCoroutine(HTTPController.POST<ProfileResponseObject<ProfileData[]>>(httpRequest, new Action<ProfileResponseObject<ProfileData[]>>(this.OnGetUserFriends), httpErrorHandler));
+			OnGetUserFriends(response);
 		}
 
 		public void OnGetUserFriendsDetoured(ProfileResponseObject<ProfileData[]> response)
@@ -662,7 +724,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			Plugin.Debug_LogMessage($"Faking player steam data for {string.Join(",", ids)}");
 
 			ProfileData[] temp = new ProfileData[ids.Length];
-			for(int i=0; i<temp.Length; i++)
+			for (int i = 0; i < temp.Length; i++)
 			{
 				temp[i] = new ProfileData()
 				{
@@ -825,34 +887,55 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		public void GetExperienceLevelTableDetoured()
 		{
-			Debug.Log("GetExperienceLevelTable");
-			string text = "player/expleveltable";
-			HttpRequest httpRequest = new HttpRequest
+			Plugin.Debug_LogMessage("Faking get experience table");
+
+			var response = new ProfileResponseObject<ExperienceLevelTable>()
 			{
-				Url = ProfileServerProxy.BASE_URL + text
+				IsSuccess = true,
+				Meta = new MetaInfo()
+				{
+					Code = 0,
+					Error = "",
+					Message = ""
+				},
+				ProfileObject = new ExperienceLevelTable()
+				{
+					Table = new PseudoDictionary<uint, uint>()
+					{
+						new PseudoDictionaryItem<uint, uint>()
+						{
+							Key = 0, Value = 0
+						},
+						new PseudoDictionaryItem<uint, uint>()
+						{
+							Key = 1, Value = 1000
+						}
+						//Probably add stuff here... idk - nobody really cares about the game
+					}
+				}
 			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[GetExperienceLevelTable] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			base.StartCoroutine(HTTPController.GET<ProfileResponseObject<ExperienceLevelTable>>(httpRequest, new Action<ProfileResponseObject<ExperienceLevelTable>>(this.OnGetExperienceLevelTable), httpErrorHandler, null));
+			OnGetExperienceLevelTableDetoured(response);
 		}
 
 		public void GetCosmeticsByUnlockTypeDetoured(string unlocktype)
 		{
-			Debug.Log("GetCosmeticsByUnlockType: " + unlocktype);
-			string text = "cosmetic/unlock/" + unlocktype;
-			HttpRequest httpRequest = new HttpRequest
+			Plugin.Debug_LogMessage($"Faking response for {unlocktype}");
+
+			var response = new ProfileResponseObject<Cosmetic[]>()
 			{
-				Url = ProfileServerProxy.BASE_URL + text
+				IsSuccess = true,
+				Meta = new MetaInfo()
+				{
+					Code = 0,
+					Message = "",
+					Error = "",
+				},
+				ProfileObject = new Cosmetic[]
+				{
+
+				}
 			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[GetCosmeticsByUnlockType] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			base.StartCoroutine(HTTPController.GET<ProfileResponseObject<Cosmetic[]>>(httpRequest, new Action<ProfileResponseObject<Cosmetic[]>>(this.OnCosmeticByUnlockType), httpErrorHandler, new CosmeticConverter()));
+			OnCosmeticByUnlockTypeDetoured(response);
 		}
 
 		public void OnCosmeticByUnlockTypeDetoured(ProfileResponseObject<Cosmetic[]> response)
@@ -1017,5 +1100,6 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			}
 			authResponse(this, profileObject);
 		}
+
 	}
 }
