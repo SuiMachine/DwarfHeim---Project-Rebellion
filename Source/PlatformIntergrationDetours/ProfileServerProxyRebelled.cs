@@ -1,5 +1,6 @@
 ﻿using DwarfHeim.Managers;
 using DwarfHeim.PlatformUserIntegration;
+using DwarfHeim.Progression;
 using DwarfHeim.UI;
 using HarmonyLib;
 using Newtonsoft.Json;
@@ -170,6 +171,8 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 	public class ProfileServerProxyRebelled : ProfileServerProxy
 	{
+		public static string FILE_REBELLED_MYUNLOCKS => Path.Combine(Application.persistentDataPath, "MyUnlocks.json");
+
 		public class ReflectionCache
 		{
 			//This is because of one of stupid edge cases, where you can't left assign in if a field is delcared as event, unless it belongs to declaring class
@@ -353,6 +356,37 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			Plugin.Debug_LogMessage($"Get player data request for {id}");
 			if (id == SteamClient.SteamId.Value.ToString())
 			{
+				string playerDifficultyUnlocks = "";
+				try
+				{
+					if(File.Exists(FILE_REBELLED_MYUNLOCKS))
+					{
+						playerDifficultyUnlocks = File.ReadAllText(FILE_REBELLED_MYUNLOCKS);
+					}
+					else
+					{
+						var tempUnlocks = new MyUnlocks()
+						{
+							DifficultyUnlock = 1,
+							MapUnlocks = 1,
+							SkirmishDifficulty = 1,
+							SkirmishMaps = 1,
+						};
+						playerDifficultyUnlocks = JsonUtility.ToJson(tempUnlocks);
+						File.WriteAllText(FILE_REBELLED_MYUNLOCKS, playerDifficultyUnlocks);
+
+						Plugin.LogMessage($"No unlocks file");
+					}
+
+					//Plugin.LogError($"Failed to load my unlocks file: {ex}");
+
+				}
+				catch (Exception ex)
+				{
+					Plugin.LogError($"Failed to load my unlocks file: {ex}");
+					playerDifficultyUnlocks = "";
+				}
+
 				OnGetPlayerDataResponse(new ProfileData()
 				{
 					id = id,
@@ -383,10 +417,13 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					},
 					ProgressionInfo = new UserProgressionInfo()
 					{
-						//Also probably some data on HDD now that servers are dead
+						//Played unlocks is last in list
 						Experience = 0,
 						Level = 1,
-						Unlocks = new string[0]
+						Unlocks = new string[]
+						{
+							playerDifficultyUnlocks
+						}
 					}
 				});
 			}
@@ -598,80 +635,27 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		public void SetUserUnlockRequestDetoured(string unlockId)
 		{
-			ProfileProperty<string> profileProperty = default(ProfileProperty<string>);
-			profileProperty.id = PlayerProfile.ProfileData.id;
-			profileProperty.Property = unlockId;
-			HttpRequest httpRequest = new HttpRequest
+			Plugin.Debug_LogMessage("Faking unlocks by storing them in file");
+			try
 			{
-				Url = ProfileServerProxy.BASE_URL + "player/unlock",
-				Json = JsonConvert.SerializeObject(profileProperty),
-				Headers = new HttpHeaders
-				{
-					Authorization = PlayerProfile.AuthenticationService.AuthToken
-				}
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler();
-			httpErrorHandler.BaseMessage = "[Sending Unlock Request] ";
-			httpErrorHandler.Callback = delegate (MetaInfo meta, bool auth)
+				File.WriteAllText(FILE_REBELLED_MYUNLOCKS, unlockId);
+			}
+			catch(Exception ex)
 			{
-				LogHandler.PrintDebug(string.Format("{0}: {1}", meta.Code, meta.Message), DebugCategory.Network, null);
-			};
-			HttpErrorHandler httpErrorHandler2 = httpErrorHandler;
-			StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, delegate (ProfileResponseObject<string> res)
-			{
-				LogHandler.PrintDebug(string.Format("Unlock request success: {0}, {1}", res.IsSuccess, res.Meta.ToString()), DebugCategory.ProfileServer, null);
-			}, httpErrorHandler2));
+				Plugin.Debug_LogError($"Something when wrong with unlock request: {ex}");
+			}
 		}
 
 		public void SendBugReportDetoured(BugReport bugReport)
 		{
 			Plugin.LogError("Why the f*** would you even try sending a report for a bug report for dead game?!");
 			return;
-			/*			string text = bugReport.ToJson<BugReport>();
-						HttpHeaders httpHeaders = new HttpHeaders
-						{
-							Authorization = PlayerProfile.AuthenticationService.AuthToken
-						};
-						string text2 = "bugreport/create/";
-						HttpRequest httpRequest = new HttpRequest
-						{
-							Url = ProfileServerProxy.BASE_URL + text2,
-							Headers = httpHeaders,
-							Json = text
-						};
-						HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-						{
-							BaseMessage = "[SendBugReport] ",
-							Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-						};
-						base.StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnSendBugReportResponse), httpErrorHandler));*/
 		}
 
 		public void SendBugReportBlobDetoured(string id, string filePostFix, FileStream blob)
 		{
 			Plugin.LogError("Why the f*** would you even try sending a report for a bug report for dead game?!");
 			return;
-			/*			Debug.Log("SendBugReportBlob: Sending bug report blob for id: " + id);
-						HttpBinaryHeaders httpBinaryHeaders = new HttpBinaryHeaders
-						{
-							Authorization = PlayerProfile.AuthenticationService.AuthToken,
-							RequestId = id,
-							FilePostFix = filePostFix,
-							ContentType = HttpContentType.ApplicationOctetStream
-						};
-						string text = "bugreport/createblobbinary/";
-						HttpBinaryRequest httpBinaryRequest = new HttpBinaryRequest
-						{
-							Url = ProfileServerProxy.BASE_URL + text,
-							Headers = httpBinaryHeaders,
-							Content = blob
-						};
-						HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-						{
-							BaseMessage = "[SendBugReportBlob] ",
-							Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-						};
-						base.StartCoroutine(HTTPController.POST_BINARY<ProfileResponseObject<string>>(httpBinaryRequest, new Action<ProfileResponseObject<string>>(this.OnSendBugReportBlobResponse), httpErrorHandler));*/
 		}
 
 		public void SendPlayerUpdateDetoured(PlayerUpdateRequest updateRequest)
