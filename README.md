@@ -10,3 +10,6 @@ As of now there is still a lot of work required, but a portion of a singleplayer
 # Installation
 * Download [Sui's Hack](https://github.com/SuiMachine/DwarfHeim---Project-Rebellion/releases).
 * Extract the zip archive and move it to the game's directory.
+
+# Notes
+* Since some of the elements like player progression need to be stored and they used to be stored in database using API, they are now instead stored for the player inside `%USERPROFILE%\AppData\LocalLow\Pineleaf Studio\DwarfHeim` directory.
