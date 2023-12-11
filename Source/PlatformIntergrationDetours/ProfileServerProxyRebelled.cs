@@ -165,15 +165,18 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		{
 			ProfileServerProxyRebelled.OtherInstance.GetExperienceLevelTableDetoured();
 			return false;
-		}		
+		}
 	}
 
 
 	public class ProfileServerProxyRebelled : ProfileServerProxy
 	{
-		public static string FILE_REBELLED_MYUNLOCKS => Path.Combine(Application.persistentDataPath, "MyUnlocks.json");
+		public static string GET_FILEPATH_REBELLED_PROFILE() => Path.Combine(Application.persistentDataPath, $"PlayerData_{SteamClient.SteamId}.json");
+		public static string GET_FILEPATH_REBELLED_PROFILE_BACKUP() => Path.Combine(Application.persistentDataPath, $"PlayerData_{SteamClient.SteamId}_{DateTime.Now.ToString().Replace(':','_')}.json");
+
 
 		public class ReflectionCache
+
 		{
 			//This is because of one of stupid edge cases, where you can't left assign in if a field is delcared as event, unless it belongs to declaring class
 			public FieldInfo AuthResponse;
@@ -213,8 +216,8 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		public static ReflectionCache ReflectionCacheInstance = new ReflectionCache();
 
-		public static new event Action<string> RegisterPlayerResponse;
-		public static new event Action<MetaInfo, bool> ErrorResponse;
+		public static event Action<string> RegisterPlayerResponseDetoured;
+		public static event Action<MetaInfo, bool> ErrorResponseDetoured;
 		public static ProfileServerProxyRebelled OtherInstance;
 
 		private void Awake()
@@ -325,30 +328,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void RegisterPlayerRequest(string id, string username, uint nameid)
 		{
-			Plugin.Debug_LogMessage("Register player data request");
-			string text = new UserRegisterRequest
-			{
-				id = id,
-				PlayerName = username,
-				NameID = nameid
-			}.ToJson<UserRegisterRequest>();
-			HttpHeaders httpHeaders = new HttpHeaders
-			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text2 = "userprofile/create/";
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text2,
-				Headers = httpHeaders,
-				Json = text
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[RegisterPlayerRequest] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			StartCoroutine(HTTPController.POST<ProfileResponseObject<UserRegisterResponse>>(httpRequest, new Action<ProfileResponseObject<UserRegisterResponse>>(this.OnRegisterPlayerResponse), httpErrorHandler));
+			Plugin.Debug_LogMessage("Register player data request... lmao");
 		}
 
 		private void GetPlayerDataRequest(string id)
@@ -356,80 +336,43 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			Plugin.Debug_LogMessage($"Get player data request for {id}");
 			if (id == SteamClient.SteamId.Value.ToString())
 			{
-				string playerDifficultyUnlocks = "";
+				var path = GET_FILEPATH_REBELLED_PROFILE();
+				ProfileData profileData = null;
 				try
 				{
-					if(File.Exists(FILE_REBELLED_MYUNLOCKS))
+					if (File.Exists(path))
 					{
-						playerDifficultyUnlocks = File.ReadAllText(FILE_REBELLED_MYUNLOCKS);
+						Plugin.LogMessage($"Loading profile from JSON {path}!");
+
+						string content = File.ReadAllText(path);
+						profileData = JsonConvert.DeserializeObject<ProfileData>(content);
+						Plugin.LogMessage($"Profile loaded successfully!");
 					}
 					else
 					{
-						var tempUnlocks = new MyUnlocks()
-						{
-							DifficultyUnlock = 1,
-							MapUnlocks = 1,
-							SkirmishDifficulty = 1,
-							SkirmishMaps = 1,
-						};
-						playerDifficultyUnlocks = JsonUtility.ToJson(tempUnlocks);
-						File.WriteAllText(FILE_REBELLED_MYUNLOCKS, playerDifficultyUnlocks);
+						profileData = CreateEmptyProfile(id);
+						File.WriteAllText(path, JsonConvert.SerializeObject(profileData, Formatting.Indented));
 
-						Plugin.LogMessage($"No unlocks file");
+						Plugin.LogMessage($"No profile file - creating new one!");
 					}
-
-					//Plugin.LogError($"Failed to load my unlocks file: {ex}");
-
 				}
 				catch (Exception ex)
 				{
-					Plugin.LogError($"Failed to load my unlocks file: {ex}");
-					playerDifficultyUnlocks = "";
-				}
+					Plugin.LogError($"Failed to load profile data: {ex}");
+					if(File.Exists(path))
+						File.Move(path, GET_FILEPATH_REBELLED_PROFILE_BACKUP());
 
-				OnGetPlayerDataResponse(new ProfileData()
-				{
-					id = id,
-					display_name = SteamClient.Name,
-					NameID = 0,
-					PlayerName = SteamClient.Name,
-					TimeInfo = new UserTimeInfo()
-					{
-						DateJoined = DateTime.MinValue,
-						LastLogin = DateTime.UtcNow,
-						TimePlayed = 0 //This should probably use Steam... but I don't know if it can
-					},
-					ShopInfo = new UserShopInfo()
-					{
-						IngameCurrency = 0,
-						PremiumCurrency = 0,
-					},
-					CustomizationInfo = new UserCustomizationInfo()
-					{
-						AvatarID = 0,
-						CosmeticIDs = new string[0],
-						EquippedCosmeticIDs = new string[0],
-						NameChangesRemaining = 0,
-					},
-					AchievementIDs = new string[]
-					{
-						//This might need to be loaded from some file instead or maybe steamworks?
-					},
-					ProgressionInfo = new UserProgressionInfo()
-					{
-						//Played unlocks is last in list
-						Experience = 0,
-						Level = 1,
-						Unlocks = new string[]
-						{
-							playerDifficultyUnlocks
-						}
-					}
-				});
+
+					profileData = CreateEmptyProfile(id);
+					File.WriteAllText(path, JsonConvert.SerializeObject(profileData, Formatting.Indented));
+				}
+				OnGetPlayerDataResponse(profileData);
+
+				//OnGetPlayerDataResponse();
 			}
 			else
 			{
-				Plugin.Debug_LogError($"Not implemented?");
+				Plugin.Debug_LogError($"Not implemented or impossible to implement with Steamworks client limitations?");
 				SteamId steamIdCasted = ulong.Parse(id);
 				OnGetPlayerDataResponse(new ProfileData()
 				{
@@ -447,6 +390,97 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 			}
 
+		}
+
+		private ProfileData CreateEmptyProfile(string id)
+		{
+			return new ProfileData()
+			{
+				id = id,
+				display_name = SteamClient.Name,
+				NameID = 0,
+				PlayerName = SteamClient.Name,
+				MatchInfo = new UserMatchInfo()
+				{
+					ConquestPlayed = 0,
+					ConquestWon = 0,
+					CurrentElo = 0,
+					CurrentRank = 0,
+					RankCooldown = 0,
+					MultipleRanks = new int[][]
+					{
+						new int[]
+						{
+							0
+						}
+					},
+					MatchIDs = new string[] {},
+					FPCounter = 0,
+					MultipleElos = new int[][][]
+					{
+						new int[][]
+						{
+							new int[] { }
+						}
+					}
+				},
+				PlatformIDs = new UserPlatformIDs()
+				{
+					sSteamID = id,
+					SteamID = ulong.Parse(id)
+				},
+				PublicRoles = new string[]
+				{
+
+				},
+				TimeInfo = new UserTimeInfo()
+				{
+					DateJoined = DateTime.MinValue,
+					LastLogin = DateTime.UtcNow,
+					TimePlayed = 0 //This should probably use Steam... but I don't know if it can
+				},
+				ShopInfo = new UserShopInfo()
+				{
+					IngameCurrency = 0,
+					PremiumCurrency = 0,
+				},
+				CustomizationInfo = new UserCustomizationInfo()
+				{
+					AvatarID = 0,
+					CosmeticIDs = new string[0],
+					EquippedCosmeticIDs = new string[0],
+					NameChangesRemaining = 0,
+				},
+				AchievementIDs = new string[] {
+						//This might need to be loaded from some file instead or maybe steamworks?
+						},
+				ProgressionInfo = new UserProgressionInfo()
+				{
+					//Played unlocks is last in list
+					Experience = 0,
+					Level = 1,
+					Unlocks = new string[] { JsonConvert.SerializeObject(new MyUnlocks()) }
+				}
+			};
+		}
+
+		private void StoreProfile()
+		{
+			if(PlayerProfile.ProfileData == null)
+			{
+				Plugin.LogError("Can't write a profile, cause it doesn't exist!");
+				return;
+			}
+
+			try
+			{
+				var path = GET_FILEPATH_REBELLED_PROFILE();
+				File.WriteAllText(path, JsonConvert.SerializeObject(PlayerProfile.ProfileData, Formatting.Indented));
+			}
+			catch (Exception ex)
+			{
+				Plugin.Debug_LogError($"Something when wrong with unlock request: {ex}");
+			}
 		}
 
 		private System.Collections.IEnumerator GetPlayerDataRequestOLD()
@@ -505,7 +539,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		{
 			Plugin.LogMessage("Faking get friends data request");
 			var profiles = new ProfileData[steamIDs.Count];
-			for(int i=0;i<profiles.Length; i++)
+			for (int i = 0; i < profiles.Length; i++)
 			{
 				var profileSteamID = steamIDs[i];
 
@@ -523,7 +557,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					NameID = 0,
 					PlayerName = new Friend(profileSteamID).Name,
 					id = profileSteamID.ToString(),
-					MatchInfo = new UserMatchInfo() {},
+					MatchInfo = new UserMatchInfo() { },
 					PublicRoles = new string[0],
 					PlatformIDs = new UserPlatformIDs()
 					{
@@ -636,14 +670,16 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		public void SetUserUnlockRequestDetoured(string unlockId)
 		{
 			Plugin.Debug_LogMessage("Faking unlocks by storing them in file");
-			try
+			if(PlayerProfile.ProfileData == null)
 			{
-				File.WriteAllText(FILE_REBELLED_MYUNLOCKS, unlockId);
+				Plugin.Debug_LogError("Player profile was null... now what?!");
+				return;
 			}
-			catch(Exception ex)
-			{
-				Plugin.Debug_LogError($"Something when wrong with unlock request: {ex}");
-			}
+
+			PlayerProfile.ProfileData.ProgressionInfo.Unlocks[PlayerProfile.ProfileData.ProgressionInfo.Unlocks.Length - 1] = unlockId;
+
+			StoreProfile();
+
 		}
 
 		public void SendBugReportDetoured(BugReport bugReport)
