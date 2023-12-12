@@ -1,0 +1,1907 @@
+0 MonoBehaviour Base
+ 0 PPtr<GameObject> m_GameObject
+  0 int m_FileID = 0
+  0 SInt64 m_PathID = 0
+ 1 UInt8 m_Enabled = 1
+ 0 PPtr<MonoScript> m_Script
+  0 int m_FileID = 1
+  0 SInt64 m_PathID = 2401
+ 1 string m_Name = "DefaultCosmeticProfile"
+ 1 Array AllCollections (67 items)
+  0 int size = 67
+  [0]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default"
+    1 string Id = "default"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 0
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 0
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 0
+    1 bool IsDefault = false
+    1 bool Hide = true
+    0 int Type = 14
+    0 int Indexer = 0
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [1]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Hammer"
+    1 string Id = "equipment_thane_hammer_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2677
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3033
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 18
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 20
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 19
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 1
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [2]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Pickaxe"
+    1 string Id = "equipment_thane_pick_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2741
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3150
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 12
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 14
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 13
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 2
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [3]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Axe"
+    1 string Id = "equipment_thane_axe_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2670
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3164
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 15
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 17
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 16
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 3
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [4]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2905
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2681
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 21
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 23
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 22
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 4
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [5]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Axe"
+    1 string Id = "equipment_thane_axe_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2861
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2673
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 27
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 29
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 28
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 5
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [6]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Pickaxe"
+    1 string Id = "equipment_thane_pick_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2923
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2940
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 24
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 26
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 25
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 6
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [7]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Pack"
+    1 string Id = "pack_thane_equipment01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3085
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 0
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 0
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 0
+    1 bool IsDefault = false
+    1 bool Hide = true
+    0 int Type = 19
+    0 int Indexer = 7
+    1 Array PackIds (4 items)
+     0 int size = 4
+     [0]
+      1 string PackIds = "equipment_thane_hammer_supporter01"
+     [1]
+      1 string PackIds = "equipment_thane_axe_supporter01"
+     [2]
+      1 string PackIds = "equipment_thane_pick_supporter01"
+     [3]
+      1 string PackIds = "equipment_thane_pitchfork_supporter01"
+  [8]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Hammer"
+    1 string Id = "equipment_thane_hammer_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2858
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2903
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 30
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 32
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 31
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 8
+    1 Array PackIds (3 items)
+     0 int size = 3
+     [0]
+      1 string PackIds = "equipment_thane_hammer_supporter01"
+     [1]
+      1 string PackIds = "equipment_thane_axe_supporter01"
+     [2]
+      1 string PackIds = "equipment_thane_pick_supporter01"
+  [9]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass  Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3049
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2749
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 33
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 35
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 34
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 9
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [10]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Ban Hammer"
+    1 string Id = "equipment_thane_hammer_beta01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2783
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2908
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 36
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 38
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 37
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [11]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "NOT USED"
+    1 string Id = "INVALID"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2952
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3065
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 60
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 62
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 61
+    1 bool IsDefault = false
+    1 bool Hide = true
+    0 int Type = 0
+    0 int Indexer = 11
+    1 Array PackIds (3 items)
+     0 int size = 3
+     [0]
+      1 string PackIds = "equipment_thane_hammer_supporter01"
+     [1]
+      1 string PackIds = "equipment_thane_axe_supporter01"
+     [2]
+      1 string PackIds = "equipment_thane_pick_supporter01"
+  [12]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Runed Axe"
+    1 string Id = "equipment_thane_axe_twitchdrop01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2892
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2945
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 3
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 5
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 4
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 12
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [13]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Runed Hammer"
+    1 string Id = "equipment_thane_hammer_twitchdrop01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3075
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2882
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 6
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 8
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 7
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 13
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [14]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Runed Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_twitchdrop01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3019
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2690
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 9
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 11
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 10
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 14
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [15]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Runed Pickaxe"
+    1 string Id = "equipment_thane_pickaxe_twitchdrop01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2885
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3162
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 0
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 2
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 1
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 15
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [16]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Reina Skin"
+    1 string Id = "skin_reina_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3171
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2793
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 45
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 47
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 46
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 5
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [17]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Samurton"
+    1 string Id = "skin_samurton_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2854
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2997
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 69
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 71
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 70
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 2
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [18]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Nubbs"
+    1 string Id = "skin_nubbs_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2751
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2720
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 57
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 59
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 58
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 0
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [19]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Aldruna"
+    1 string Id = "skin_aldruna_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2777
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3081
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 39
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 41
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 40
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 1
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [20]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Frida"
+    1 string Id = "skin_frida_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2963
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2686
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 51
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 53
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 52
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 4
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [21]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Raven"
+    1 string Id = "skin_raven_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2833
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2800
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 63
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 65
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 64
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 3
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [22]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Reina"
+    1 string Id = "skin_reina_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3136
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2895
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 48
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 50
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 49
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 5
+    0 int Indexer = 16
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [23]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Samurton"
+    1 string Id = "skin_samurton_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2785
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3143
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 72
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 74
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 73
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 2
+    0 int Indexer = 17
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [24]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Nubbs"
+    1 string Id = "skin_nubbs_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2990
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2789
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 60
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 62
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 61
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 0
+    0 int Indexer = 18
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [25]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Aldruna"
+    1 string Id = "skin_aldruna_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3149
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2829
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 42
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 44
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 43
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 1
+    0 int Indexer = 19
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [26]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Frida"
+    1 string Id = "skin_frida_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3009
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2860
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 54
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 56
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 55
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 4
+    0 int Indexer = 20
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [27]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Raven"
+    1 string Id = "skin_raven_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3031
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2699
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 66
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 68
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 67
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 3
+    0 int Indexer = 21
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [28]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Units Default Skin"
+    1 string Id = "skin_unit_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3145
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2744
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 81
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 83
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 82
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 8
+    0 int Indexer = 22
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [29]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Units Supporter Skin"
+    1 string Id = "skin_unit_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2843
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3065
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 84
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 86
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 85
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 8
+    0 int Indexer = 23
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [30]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Christmas Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_xmas01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2746
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3036
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 93
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 95
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 94
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 24
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [31]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Black Iron Axe"
+    1 string Id = "equipment_thane_axe_twitchdrop02"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2988
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2974
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 96
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 98
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 97
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 25
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [32]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Black Iron Pickaxe"
+    1 string Id = "equipment_thane_pickaxe_twitchdrop02"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2886
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2725
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 99
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 101
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 100
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 26
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [33]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Black Iron Hammer"
+    1 string Id = "equipment_thane_hammer_twitchdrop02"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2890
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2705
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 102
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 104
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 103
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 27
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [34]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Black Iron PitchFork"
+    1 string Id = "equipment_thane_pitchfork_twitchdrop02"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2931
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2865
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 105
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 107
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 106
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 28
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [35]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Gravestone Axe"
+    1 string Id = "equipment_thane_axe_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2911
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3082
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 108
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 113
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 109
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 29
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [36]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Gravestone Pickaxe"
+    1 string Id = "equipment_thane_pickaxe_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2982
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2727
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 111
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 113
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 112
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 30
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [37]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Gravestone Hammer"
+    1 string Id = "equipment_thane_hammer_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2781
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2863
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 114
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 116
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 115
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 31
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [38]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Gravestone Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3090
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3151
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 117
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 119
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 118
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 32
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [39]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Aldruna"
+    1 string Id = "skin_aldruna_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2808
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3124
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 120
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 122
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 121
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 1
+    0 int Indexer = 33
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [40]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Reina"
+    1 string Id = "skin_reina_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2766
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2939
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 123
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 125
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 124
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 5
+    0 int Indexer = 34
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [41]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Frida"
+    1 string Id = "skin_frida_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2693
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3044
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 126
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 128
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 127
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 4
+    0 int Indexer = 35
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [42]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Nubbs"
+    1 string Id = "skin_nubbs_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2893
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3037
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 129
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 131
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 130
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 0
+    0 int Indexer = 36
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [43]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Alban"
+    1 string Id = "skin_alban_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2778
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3014
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 132
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 134
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 133
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 2
+    0 int Indexer = 37
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [44]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Edlerwood Raven"
+    1 string Id = "skin_raven_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2922
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2965
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 135
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 137
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 136
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 3
+    0 int Indexer = 38
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [45]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Troll Hunter Axe"
+    1 string Id = "equipment_thane_axe_twitchdrop03"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3061
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2698
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 138
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 140
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 139
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 39
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [46]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Troll Hunter Hammer"
+    1 string Id = "equipment_thane_hammer_twitchdrop03"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2958
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2932
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 141
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 143
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 142
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 40
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [47]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Troll Hunter Pickaxe"
+    1 string Id = "equipment_thane_pickaxe_twitchdrop03"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2853
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2687
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 144
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 146
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 145
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 41
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [48]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Troll Hunter Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_twitchdrop03"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3066
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2787
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 147
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 149
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 148
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 42
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [49]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Nubbs Prototypes Axe"
+    1 string Id = "equipment_thane_axe_twitchdrop04"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3041
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2971
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 150
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 152
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 151
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 43
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [50]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Nubbs Prototypes Hammer"
+    1 string Id = "equipment_thane_hammer_twitchdrop04"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3052
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2927
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 153
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 154
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 155
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 44
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [51]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Nubbs Prototypes Pickaxe"
+    1 string Id = "equipment_thane_pickaxe_twitchdrop04"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2735
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3022
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 159
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 160
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 161
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 45
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [52]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Nubbs Prototypes Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_twitchdrop04"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2743
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2756
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 156
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 157
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 158
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 46
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [53]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Blades Axe"
+    1 string Id = "equipment_thane_axe_twitchdrop05"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2880
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2994
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 162
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 163
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 164
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 9
+    0 int Indexer = 47
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [54]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Blades Hammer"
+    1 string Id = "equipment_thane_hammer_twitchdrop05"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3056
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3071
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 165
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 166
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 167
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 48
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [55]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Blades Pickaxe"
+    1 string Id = "equipment_thane_pickaxe_twitchdrop05"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3006
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3104
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 168
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 169
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 170
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 11
+    0 int Indexer = 49
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [56]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Blades Pitchfork"
+    1 string Id = "equipment_thane_pitchfork_twitchdrop05"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2981
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2770
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 171
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 172
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 173
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 12
+    0 int Indexer = 50
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [57]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Jostone"
+    1 string Id = "skin_jostone_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2986
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2849
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 174
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 176
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 175
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 20
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [58]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Hilda"
+    1 string Id = "skin_hilda_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2814
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3163
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 183
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 185
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 184
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 21
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [59]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Default Thorgrim"
+    1 string Id = "skin_thorgrim_default01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3170
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3072
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 192
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 194
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 193
+    1 bool IsDefault = true
+    1 bool Hide = false
+    0 int Type = 22
+    0 int Indexer = 10
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [60]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Jostone"
+    1 string Id = "skin_jostone_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2996
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3135
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 177
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 179
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 178
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 20
+    0 int Indexer = 51
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [61]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Hilda"
+    1 string Id = "skin_hilda_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2761
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3156
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 186
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 188
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 187
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 21
+    0 int Indexer = 52
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [62]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Supporter Pass Thorgrim"
+    1 string Id = "skin_thorgrim_supporter01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2726
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3097
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 195
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 197
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 196
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 22
+    0 int Indexer = 53
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [63]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Jostone"
+    1 string Id = "skin_jostone_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2696
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2845
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 180
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 182
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 181
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 20
+    0 int Indexer = 54
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [64]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Hilda"
+    1 string Id = "skin_hilda_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 3132
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2759
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 189
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 191
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 190
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 21
+    0 int Indexer = 55
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [65]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Elderwood Thorgrim"
+    1 string Id = "skin_thorgrim_levelreward01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2747
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2898
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 198
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 200
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 199
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 22
+    0 int Indexer = 56
+    1 Array PackIds (0 items)
+     0 int size = 0
+  [66]
+   0 CosmeticData AllCollections
+    1 string NameOfSkin = "Early Access Hammer"
+    1 string Id = "equipment_thane_hammer_ea01"
+    0 PPtr<$Sprite> Icon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2671
+    0 PPtr<$Sprite> ShowCaseIcon
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 2732
+    0 PPtr<$GameObject> VisualObject
+     0 int m_FileID = 0
+     0 SInt64 m_PathID = 0
+    0 LocalizedString DisplayName
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 201
+    0 LocalizedString Description
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 203
+    0 LocalizedString Information
+     0 int ContainerIndex = 7
+     0 int FieldIndex = 202
+    1 bool IsDefault = false
+    1 bool Hide = false
+    0 int Type = 10
+    0 int Indexer = 57
+    1 Array PackIds (0 items)
+     0 int size = 0
