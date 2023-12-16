@@ -14,7 +14,6 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Ucg.Matchmaking;
-using static UnityEngine.UIElements.StyleVariableResolver;
 
 namespace ProjectRebellion.PlatformIntergrationDetours
 {
@@ -229,6 +228,15 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 		//public static event Action<MetaInfo, bool> ErrorResponseDetoured;
 		public static ProfileServerProxyRebelled OtherInstance;
 
+		private System.Collections.IEnumerator DelayResponseFrames(Action action, uint Frames)
+		{
+			for (uint i = 0; i<Frames; i++)
+			{
+				yield return null;
+			}
+			action();
+		}
+
 		private void Awake()
 		{
 			Plugin.LogMessage("Setting up rebelled profile server behaviour");
@@ -285,19 +293,15 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private void ValidateSteamAuthTicketRequestDetoured(ulong steamid, uint appID)
 		{
-			StartCoroutine(DelayAuthorization(new UserAuthorizationResponse()
+			StartCoroutine(DelayResponseFrames(() =>
 			{
-				HasRegistered = true,
-				id = steamid.ToString(),
-				Token = $"{steamid}/{appID}"
-			}));
-		}
-
-		private IEnumerator DelayAuthorization(UserAuthorizationResponse userAuthorizationResponse)
-		{
-			//yield return new WaitForSeconds(5);
-			yield return null;
-			OnAuthResponse(userAuthorizationResponse);
+				OnAuthResponse(new UserAuthorizationResponse()
+				{
+					HasRegistered = true,
+					id = steamid.ToString(),
+					Token = $"{steamid}/{appID}"
+				});
+			}, 1));
 		}
 
 		private IEnumerator ValidateSteamAuthTicketRequestOLD(string username, uint appID)
@@ -779,7 +783,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			//TODO: Probably should send this to other player somehow...
 			Plugin.LogMessage("SendPlayerUpdate");
 
-			StartCoroutine(DelayResponse(() =>
+			StartCoroutine(DelayResponseFrames(() =>
 			{
 				OnPlayerUpdateResponse(new ProfileResponseObject<string>()
 				{
@@ -790,9 +794,9 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 						Error = "",
 						Message = ""
 					},
-					ProfileObject = ""
+					ProfileObject = JsonUtility.ToJson(updateRequest)
 				});
-			}));
+			}, 1));
 		}
 
 		public void GetPlayerCosmeticDetoured(string id)
@@ -807,7 +811,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					EquippedCosmeticIDs = new string[] { } //Might need to be send somehow?
 				};
 
-				StartCoroutine(DelayResponse(() => OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
+				StartCoroutine(DelayResponseFrames(() => OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
 				{
 					IsSuccess = true,
 					Meta = new MetaInfo()
@@ -817,7 +821,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 						Message = ""
 					},
 					ProfileObject = result
-				})));
+				}), 1));
 			}
 			else
 			{
@@ -826,7 +830,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					CosmeticIDs = RebelledData.GetAllCosmetics(),
 					EquippedCosmeticIDs = new string[] { } //Might need to be send somehow?
 				};
-				StartCoroutine(DelayResponse(() => OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
+				StartCoroutine(DelayResponseFrames(() => OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
 				{
 					IsSuccess = true,
 					Meta = new MetaInfo()
@@ -836,15 +840,11 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 						Message = ""
 					},
 					ProfileObject = result
-				})));
+				}), 1));
 			}
 		}
 
-		private System.Collections.IEnumerator DelayResponse(Action action)
-		{
-			yield return null;
-			action();
-		}
+
 
 		public void GetPlayerSteamDetoured(ulong[] ids)
 		{
