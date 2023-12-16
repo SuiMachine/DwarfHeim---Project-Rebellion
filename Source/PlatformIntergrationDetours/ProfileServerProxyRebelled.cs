@@ -1,4 +1,5 @@
 ﻿using DwarfHeim.Managers;
+using DwarfHeim.Maps;
 using DwarfHeim.PlatformUserIntegration;
 using DwarfHeim.Progression;
 using DwarfHeim.UI;
@@ -181,6 +182,10 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 	{
 		public static string GET_FILEPATH_REBELLED_PROFILE() => Path.Combine(Application.persistentDataPath, $"PlayerData_{SteamClient.SteamId}.json");
 		public static string GET_FILEPATH_REBELLED_PROFILE_BACKUP() => Path.Combine(Application.persistentDataPath, $"PlayerData_{SteamClient.SteamId}_{DateTime.Now.ToString().Replace(':', '_')}.json");
+		public static string GET_FILEPATH_REBELLED_MATCHES() => Path.Combine(Application.persistentDataPath, $"PlayerData_{SteamClient.SteamId}_matches.json");
+		public static string GET_FILEPATH_REBELLED_MATCHES_BACKUP() => Path.Combine(Application.persistentDataPath, $"PlayerData_{SteamClient.SteamId}_matches_{DateTime.Now.ToString().Replace(':', '_')}.json");
+
+
 
 
 		public class ReflectionCache
@@ -230,7 +235,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		private System.Collections.IEnumerator DelayResponseFrames(Action action, uint Frames)
 		{
-			for (uint i = 0; i<Frames; i++)
+			for (uint i = 0; i < Frames; i++)
 			{
 				yield return null;
 			}
@@ -436,7 +441,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 						{
 							new int[] { }
 						}
-					}
+					},
 				},
 				PlatformIDs = new UserPlatformIDs()
 				{
@@ -660,49 +665,73 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 			if (id == SteamClient.SteamId.ToString())
 			{
-				//Store/Load from file?
-				var matchProfile = new MatchProfile[]
+				var filePath = GET_FILEPATH_REBELLED_MATCHES();
+
+				if (File.Exists(filePath))
 				{
-					new MatchProfile()
+					var matchProfile = JsonConvert.DeserializeObject<MatchProfile[]>(File.ReadAllText(filePath));
+
+					OnGetUserMatches(new ProfileResponseObject<MatchProfile[]>()
 					{
-						Date = DateTime.UtcNow,
-						Difficulty = 0,
-						EndInfo = new MatchEndInfo()
+						IsSuccess = true,
+						Meta = new MetaInfo()
 						{
-							Finished = true,
-							Surrender = false,
-							TimePlayed = 0,
-							WinningTeam = 0,
+							Code = 0,
+							Error = "",
+							Message = "",
 						},
-						GameServerID = 0,
-						id = "",
-						MapID = "",
-						ModeID = 0,
-						Ranked = false,
-						Teams = new MatchTeam[]
-						{
-							new MatchTeam()
-							{
-								players = new MatchPlayer[]
-									{
-
-									}
-								}
-							}
-						}
-				};
-
-				OnGetUserMatches(new DwarfHeim.PlatformUserIntegration.ProfileResponseObject<MatchProfile[]>()
+						ProfileObject = matchProfile
+					});
+				}
+				else
 				{
-					IsSuccess = true,
-					Meta = new DwarfHeim.PlatformUserIntegration.MetaInfo()
+					//Store/Load from file?
+					var matchProfile = new MatchProfile[]
 					{
-						Code = 0,
-						Error = "",
-						Message = "",
-					},
-					ProfileObject = matchProfile
-				});
+						//EMPTY
+						/*					new MatchProfile()
+											{
+												Date = DateTime.UtcNow,
+												Difficulty = 0,
+												EndInfo = new MatchEndInfo()
+												{
+													Finished = true,
+													Surrender = false,
+													TimePlayed = 0,
+													WinningTeam = 0,
+												},
+												GameServerID = 0,
+												id = "",
+												MapID = GameMaps.Map.MountainForest.ToString(),
+												ModeID = 0,
+												Ranked = false,
+												Teams = new MatchTeam[]
+												{
+													new MatchTeam()
+													{
+														players = new MatchPlayer[]
+															{
+
+															}
+														}
+													}
+												}*/
+					};
+
+					File.WriteAllText(filePath, JsonConvert.SerializeObject(matchProfile));
+
+					OnGetUserMatches(new ProfileResponseObject<MatchProfile[]>()
+					{
+						IsSuccess = true,
+						Meta = new MetaInfo()
+						{
+							Code = 0,
+							Error = "",
+							Message = "",
+						},
+						ProfileObject = matchProfile
+					});
+				}
 			}
 			else
 			{
