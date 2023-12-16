@@ -6,7 +6,7 @@
 		{
 			return new string[]
 			{
-				"default",
+				//"default",
 				"equipment_thane_hammer_default01",
 				"equipment_thane_pick_default01",
 				"equipment_thane_axe_default01",
@@ -17,7 +17,7 @@
 				"equipment_thane_hammer_supporter01",
 				"equipment_thane_pitchfork_supporter01",
 				"equipment_thane_hammer_beta01",
-				"INVALID",
+				//"INVALID",
 				"equipment_thane_axe_twitchdrop01",
 				"equipment_thane_hammer_twitchdrop01",
 				"equipment_thane_pitchfork_twitchdrop01",

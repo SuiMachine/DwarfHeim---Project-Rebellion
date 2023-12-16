@@ -14,6 +14,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Ucg.Matchmaking;
+using static UnityEngine.UIElements.StyleVariableResolver;
 
 namespace ProjectRebellion.PlatformIntergrationDetours
 {
@@ -775,26 +776,23 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 
 		public void SendPlayerUpdateDetoured(PlayerUpdateRequest updateRequest)
 		{
-			Plugin.LogError("SendPlayerUpdate");
+			//TODO: Probably should send this to other player somehow...
+			Plugin.LogMessage("SendPlayerUpdate");
 
-			Debug.Log("SendPlayerUpdate: Sending Player Update for id : " + updateRequest.id);
-			HttpHeaders httpHeaders = new HttpHeaders
+			StartCoroutine(DelayResponse(() =>
 			{
-				Authorization = PlayerProfile.AuthenticationService.AuthToken
-			};
-			string text = "player/update";
-			HttpRequest httpRequest = new HttpRequest
-			{
-				Url = ProfileServerProxy.BASE_URL + text,
-				Headers = httpHeaders,
-				Json = updateRequest.ToJson<PlayerUpdateRequest>()
-			};
-			HttpErrorHandler httpErrorHandler = new HttpErrorHandler
-			{
-				BaseMessage = "[SendPlayerUpdate] ",
-				Callback = new Action<MetaInfo, bool>(this.OnErrorResponse)
-			};
-			StartCoroutine(HTTPController.POST<ProfileResponseObject<string>>(httpRequest, new Action<ProfileResponseObject<string>>(this.OnPlayerUpdateResponse), httpErrorHandler));
+				OnPlayerUpdateResponse(new ProfileResponseObject<string>()
+				{
+					IsSuccess = true,
+					Meta = new MetaInfo()
+					{
+						Code = 0,
+						Error = "",
+						Message = ""
+					},
+					ProfileObject = ""
+				});
+			}));
 		}
 
 		public void GetPlayerCosmeticDetoured(string id)
@@ -808,7 +806,8 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					CosmeticIDs = RebelledData.GetAllCosmetics(),
 					EquippedCosmeticIDs = new string[] { } //Might need to be send somehow?
 				};
-				OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
+
+				StartCoroutine(DelayResponse(() => OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
 				{
 					IsSuccess = true,
 					Meta = new MetaInfo()
@@ -818,7 +817,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 						Message = ""
 					},
 					ProfileObject = result
-				});
+				})));
 			}
 			else
 			{
@@ -827,7 +826,7 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 					CosmeticIDs = RebelledData.GetAllCosmetics(),
 					EquippedCosmeticIDs = new string[] { } //Might need to be send somehow?
 				};
-				OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
+				StartCoroutine(DelayResponse(() => OnGetPlayerCosmeticsResponse(new ProfileResponseObject<PlayerCosmeticsResponse>()
 				{
 					IsSuccess = true,
 					Meta = new MetaInfo()
@@ -837,8 +836,14 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 						Message = ""
 					},
 					ProfileObject = result
-				});
+				})));
 			}
+		}
+
+		private System.Collections.IEnumerator DelayResponse(Action action)
+		{
+			yield return null;
+			action();
 		}
 
 		public void GetPlayerSteamDetoured(ulong[] ids)
@@ -1179,5 +1184,21 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			authResponse(this, profileObject);
 		}
 
+		protected override void OnGetPlayerCosmeticsResponse(ProfileResponseObject<PlayerCosmeticsResponse> response)
+		{
+			Plugin.Debug_LogMessage("Received response cosmetics");
+			if (!response.IsSuccess)
+			{
+				this.OnErrorResponse(response.Meta, false);
+				return;
+			}
+			LogHandler.PrintDebug("OnGetPlayerCosmeticsResponse: Result success: " + response.ProfileObject.ToJson<PlayerCosmeticsResponse>(), DebugCategory.ProfileServer, null);
+			EventHandler<PlayerCosmeticsResponse> getPlayerCosmeticsResponse = (EventHandler<PlayerCosmeticsResponse>)ReflectionCacheInstance.GetPlayerCosmeticsResponse.GetValue(this);
+			if (getPlayerCosmeticsResponse == null)
+			{
+				return;
+			}
+			getPlayerCosmeticsResponse(this, response.ProfileObject);
+		}
 	}
 }
