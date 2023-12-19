@@ -882,45 +882,52 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 			ProfileData[] temp = new ProfileData[ids.Length];
 			for (int i = 0; i < temp.Length; i++)
 			{
-				temp[i] = new ProfileData()
+				if (SteamClient.SteamId == ids[i])
 				{
-					AchievementIDs = new string[0],
-					CustomizationInfo = new UserCustomizationInfo()
+					temp[i] = PlayerProfile.ProfileData;
+				}
+				else
+				{
+					temp[i] = new ProfileData()
 					{
-						AvatarID = 0,
-						CosmeticIDs = new string[0],
-						EquippedCosmeticIDs = new string[0],
-						NameChangesRemaining = 0
-					},
-					display_name = new Friend((SteamId)ids[i]).Name,
-					id = ids[i].ToString(),
-					NameID = 0,
-					PlatformIDs = new UserPlatformIDs()
-					{
-						sSteamID = ids[i].ToString(),
-						SteamID = ids[i]
-					},
-					PlayerName = new Friend((SteamId)ids[i]).Name,
-					ProgressionInfo = new UserProgressionInfo()
-					{
-						Experience = 0,
-						Level = 1,
-						Unlocks = new string[0],
-					},
-					MatchInfo = new UserMatchInfo(),
-					PublicRoles = new string[0],
-					ShopInfo = new UserShopInfo()
-					{
-						IngameCurrency = 0,
-						PremiumCurrency = 0
-					},
-					TimeInfo = new UserTimeInfo()
-					{
-						DateJoined = DateTime.MinValue,
-						LastLogin = DateTime.UtcNow,
-						TimePlayed = 0
-					}
-				};
+						AchievementIDs = new string[0],
+						CustomizationInfo = new UserCustomizationInfo()
+						{
+							AvatarID = 0,
+							CosmeticIDs = new string[0],
+							EquippedCosmeticIDs = new string[0],
+							NameChangesRemaining = 0
+						},
+						display_name = new Friend((SteamId)ids[i]).Name,
+						id = ids[i].ToString(),
+						NameID = 0,
+						PlatformIDs = new UserPlatformIDs()
+						{
+							sSteamID = ids[i].ToString(),
+							SteamID = ids[i]
+						},
+						PlayerName = new Friend((SteamId)ids[i]).Name,
+						ProgressionInfo = new UserProgressionInfo()
+						{
+							Experience = 0,
+							Level = 1,
+							Unlocks = new string[0],
+						},
+						MatchInfo = new UserMatchInfo(),
+						PublicRoles = new string[0],
+						ShopInfo = new UserShopInfo()
+						{
+							IngameCurrency = 0,
+							PremiumCurrency = 0
+						},
+						TimeInfo = new UserTimeInfo()
+						{
+							DateJoined = DateTime.MinValue,
+							LastLogin = DateTime.UtcNow,
+							TimePlayed = 0
+						}
+					};
+				}				
 			}
 
 			ProfileResponseObject<ProfileData[]> response = new ProfileResponseObject<ProfileData[]>()
@@ -1228,6 +1235,23 @@ namespace ProjectRebellion.PlatformIntergrationDetours
 				return;
 			}
 			getPlayerCosmeticsResponse(this, response.ProfileObject);
+		}
+
+		protected override void OnGetPlayerSteamResponse(ProfileResponseObject<ProfileData[]> response)
+		{
+			if (!response.IsSuccess)
+			{
+				this.OnErrorResponse(response.Meta, false);
+				return;
+			}
+			LogHandler.PrintDebug("OnGetPlayerSteamResponse: Result success: " + response.ProfileObject.ToJson<ProfileData[]>(), DebugCategory.ProfileServer, null);
+			EventHandler<ProfileData[]> getPlayerSteamResponse = (EventHandler<ProfileData[]>)ReflectionCacheInstance.GetPlayerSteamResponse.GetValue(this);
+
+			if (getPlayerSteamResponse == null)
+			{
+				return;
+			}
+			getPlayerSteamResponse(this, response.ProfileObject);
 		}
 	}
 }
